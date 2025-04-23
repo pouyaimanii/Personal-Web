@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+*.db
+db.sqlite3
+media/
+staticfiles/
+static/
+.env
+.env.*
+*.env
+*.secret
+
+# If you use Django's collectstatic:
+static_cdn/
+
+# VSCode settings
+.vscode/
+
+# MyPy and other Python tools
+.mypy_cache/
+.pytest_cache/
+.tox/
+coverage/
+htmlcov/
+*.cover
+*.log
+*.test
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# IDEs
+.idea/
+*.iml
+
+# pip
+pip-log.txt
+
+# Mac/Linux hidden files
+*.swp
+*.swo
+
+# Local settings
+local_settings.py
