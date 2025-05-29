@@ -2,27 +2,20 @@
 
 
 from django.db import models
-
-
-from django.db import models
-
+from django.core.validators import FileExtensionValidator
 
 
 class SocialLinksModel(models.Model):
-    instagram = models.URLField(blank=True, null=True)
-    telegram = models.URLField(blank=True, null=True)
-    whatsapp = models.URLField(blank=True, null=True)
-    github = models.URLField(blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        self.pk = 1  # همیشه فقط یک رکورد
-        super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        pass  # قابل حذف نیست
+    social_name = models.CharField(max_length=100)
+    icon = models.FileField(
+    upload_to='socialImage/',
+    validators=[FileExtensionValidator(allowed_extensions=['svg', 'png', 'jpg', 'jpeg'])]
+    )
+    link = models.URLField(blank=True, null=True)
+    
 
     def __str__(self):
-        return "Social Media Links"  
+        return self.social_name  
 
     class Meta:
         verbose_name = "شبکه‌های اجتماعی"
@@ -31,10 +24,14 @@ class SocialLinksModel(models.Model):
 
 
 
+
 class UserSpecializationModel(models.Model):
     title = models.CharField(max_length=100)
     numberProject = models.CharField(max_length=10)
-    icon = models.ImageField(upload_to='icon/')
+    icon = models.FileField(
+    upload_to='icon/',
+    validators=[FileExtensionValidator(allowed_extensions=['svg', 'png', 'jpg', 'jpeg'])]
+    )
 
     class Meta:
         verbose_name = "تخصص ها"
@@ -44,6 +41,43 @@ class UserSpecializationModel(models.Model):
     def __str__(self):
         return self.title  
     
+
+
+
+    
+class ProjectStatisticsModel(models.Model):
+    title = models.CharField(max_length=100)
+    numberProject = models.CharField(max_length=10)
+    icon = models.FileField(
+    upload_to='icon/',
+    validators=[FileExtensionValidator(allowed_extensions=['svg', 'png', 'jpg', 'jpeg'])]
+    )
+
+    class Meta:
+        verbose_name = "آمار پروژه ها "
+        verbose_name_plural = "آمار پروژه ها"
+
+    
+    def __str__(self):
+        return self.title  
+    
+class ExperienceYearsModel(models.Model):
+    title = models.CharField(max_length=100)
+    number = models.CharField(max_length=10)
+    description = models.TextField()
+
+    class Meta:
+        verbose_name = "سال های تجربه "
+        verbose_name_plural = "سال های تجربه"
+
+    
+    def __str__(self):
+        return self.title  
+    
+
+
+
+
 
 
 
@@ -63,7 +97,7 @@ class TextKeys(models.TextChoices):
 
     CONTACT_SMALL_TITLE= "contact_small_title", 'عنوان کوچک تماس باما'
     CONTACT_BIG_TITLE = 'contact_big_title', 'عنوان بزرگ تماس باما'
-    CONTACT_DESCRIPTION = 'توضیحات تماس باما'
+    CONTACT_DESCRIPTION ='contact_description', 'توضیحات تماس باما'
 
     PORTFOLIO_TITLE = 'portfolio_title', 'عنوان نمونه کار'
     PORTFOLIO_DESCRIPTION = 'portfolio_description', 'توضیحات نمونه کار'
@@ -204,8 +238,8 @@ class KnowledgeCategoryModel(models.Model):
 
 class KnowledgeModel(models.Model):
     title = models.CharField(max_length=200)
-    percent = models.IntegerField(max_length=100)
-    category = models.ForeignKey(KnowledgeCategoryModel, on_delete=models.CASCADE)
+    percent = models.IntegerField()
+    category = models.ForeignKey(KnowledgeCategoryModel,  related_name='charts', on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = "نمودار دانش"
@@ -215,12 +249,6 @@ class KnowledgeModel(models.Model):
     
     def __str__(self):
         return self.title  
-
-
-
-
-
-
 
 
 

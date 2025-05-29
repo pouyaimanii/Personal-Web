@@ -10,7 +10,10 @@ from .models import (
     SiteText,
     KnowledgeCategoryModel,
     KnowledgeModel,
-    SiteImage
+    SiteImage, 
+    ProjectStatisticsModel,
+    ExperienceYearsModel,
+
 )
 
 
@@ -23,6 +26,18 @@ class SocialLinksSerializer(serializers.ModelSerializer):
 class UserSpecializationSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSpecializationModel
+        fields = '__all__'
+
+
+class ProjectStatisticsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectStatisticsModel
+        fields = '__all__'
+
+
+class ExperienceYearsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExperienceYearsModel
         fields = '__all__'
 
 
@@ -62,10 +77,6 @@ class SiteTextSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class KnowledgeCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = KnowledgeCategoryModel
-        fields = '__all__'
 
 
 class KnowledgeSerializer(serializers.ModelSerializer):
@@ -73,6 +84,14 @@ class KnowledgeSerializer(serializers.ModelSerializer):
         model = KnowledgeModel
         fields = '__all__'
 
+
+class KnowledgeCategorySerializer(serializers.ModelSerializer):
+    charts = KnowledgeSerializer(many=True, read_only=True)  # استفاده از related_name
+
+    class Meta:
+        model = KnowledgeCategoryModel
+        fields = '__all__'
+        
 
 class SiteImageSerializer(serializers.ModelSerializer):
     class Meta:
